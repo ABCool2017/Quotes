@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Quotes Registration/Login</title>
+  </head>
+  <body>
+    {% if messages %}
+    <ul class='messages'>
+      {% for message in messages %}
+      <li{% if message.tags %} class ="{{messages.tags}}"{% endif %}>{{ message }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+    <h1>Welcome to the Quote Page!</h1>
+    <fieldset>
+      <legend>Register</legend>
+      <form action='/register' method="POST">
+        {% csrf_token %}
+        Name:<input type="text" name="name">
+        Username:<input type="text" name="username">
+        Email:<input type="text" name="email">
+        Password:<input type="text" name="password">
+        Confirm Password:<input type="text" name="confirm_password">
+        Date of Birth:<input type="date" name="dob">
+        <input type="submit" name="register" value="Register">
+      </form>
+    </fieldset>
+    <fieldset>
+      <legend>Login</legend>
+      <form action="/login" method ="POST">
+        {% csrf_token %}
+        Email:<input type="text" name="email">
+        Password:<input type="text" name="password">
+        <input type="submit">
+      </form>
+    </fieldset>
+  </body>
+</html>

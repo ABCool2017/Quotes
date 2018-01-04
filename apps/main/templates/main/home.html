@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Quotes Homepage</title>
+  </head>
+  <body>
+    <center>
+      <h1>Welcome, {{user.name}}!</h1>
+      <h2><a href="/logout">Logout</a></h2>
+      <h4>Quotable Quotes:</h4>
+      <div id="quotes" style="overflow:scroll; height:300px;">
+        {% for quote in quotable_quotes %}
+          <div class="one_quote" style="border: 1px black solid; width: 700px;">
+            <p>{{quote.author}}: {{quote.content}}</p>
+            <p>posted by:<a href="/users/{{quote.poster.id}}">{{quote.poster.name}}</a></p>
+            <button><a href="/add_favorite/{{quote.id}}">Add to My List</a></button>
+          </div>
+        {% endfor %}
+      </div>
+      <h4>Favorites:</h4>
+      <div id="quotes" style="overflow:scroll; height:400px;">
+        {% for favorite in favorites %}
+          <div class="one_quote" style="border: 1px black solid; width: 700px;">
+            <p>{{favorite.author}}: {{favorite.content}}</p>
+            <p>posted by:<a href="/users/{{favorite.poster.id}}">{{favorite.poster.name}}</a></p>
+            <button><a href="/remove_favorite/{{favorite.id}}">Remove from Favorites</a></button>
+          </div>
+        {% endfor %}
+      </div>
+      {% if messages %}
+      <ul class='messages'>
+        {% for message in messages %}
+        <li{% if message.tags %} class ="{{messages.tags}}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+      <fieldset>
+        <legend>Contribute a Quote:</legend>
+        <form action="/create" method="POST">
+        {% csrf_token %}
+          Quoted by:<input type="text" name="author">
+          Content:<input type="textarea" name="content">
+          <input type="submit">
+        </form>
+      </fieldset>
+    </center>
+  </body>
+</html>
